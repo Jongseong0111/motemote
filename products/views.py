@@ -20,6 +20,7 @@ class PageView(View):
                 return JsonResponse({'MESSAGE':'NO_MENU'}, status=400)
 
             concepts = Concept.objects.filter(item__category_id = category_id) if not main else Item.objects.order_by('-order_quantity')[:8] 
+            
             results = [
                 {
                         'concept'             : concept.name if not main else None,
@@ -39,10 +40,7 @@ class PageView(View):
 
             if main: 
                 for result in results:
-                    del result['concept']
-                    del result['concept_description']
-                    del result['concept_id']
-            
+                    del result['concept'], result['concept_description'], result['concept_id']            
 
             return JsonResponse({'RESULTS': results}, status=200)
         except KeyError:
