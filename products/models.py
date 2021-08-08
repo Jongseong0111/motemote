@@ -3,18 +3,18 @@ from django.db import models
 class Product(models.Model):
     name = models.CharField(max_length=100)
 
-    class meta:
+    class Meta:
         db_table = "products"
 
 class Category(models.Model):
     product = models.ForeignKey("Product", on_delete = models.CASCADE)
     name    = models.CharField(max_length=100)
 
-    class meata:
+    class Meta:
         db_table = "categories"
 
+
 class Concept(models.Model):
-    category = models.ForeignKey("Category", on_delete=models.CASCADE)
     name     = models.CharField(max_length=100)
     content  = models.TextField(default='')
 
@@ -24,13 +24,14 @@ class Concept(models.Model):
 
 class Item(models.Model):
     concept        = models.ForeignKey("Concept", on_delete=models.CASCADE)
-    color          = models.ForeignKey("Color", on_delete=models.CASCADE)
-    option         = models.ForeignKey("Option", on_delete=models.CASCADE)
+    color          = models.ForeignKey("Color", on_delete=models.CASCADE, null=True)
+    option         = models.ForeignKey("Option", on_delete=models.CASCADE, null=True)
     name           = models.CharField(max_length=100)
     price          = models.DecimalField(max_digits=10, decimal_places=2)
     discount       = models.DecimalField(max_digits=10, decimal_places=2)
-    stock          = models.IntegerField()
+    stock          = models.IntegerField(default=0)
     order_quantity = models.IntegerField(default=0)
+    category       = models.ForeignKey("Category", on_delete=models.CASCADE)
 
     class Meta:
         db_table = "items"
