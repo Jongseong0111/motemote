@@ -7,6 +7,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "motemote.settings")
 django.setup()
 
 from products.models import *
+from users.models import *
 
 # CSV_PATH_PRODUCTS = './category.csv'
 
@@ -47,15 +48,21 @@ from products.models import *
 #         Item.objects.create(category_id = row[0], concept_id = row[1], option_id = row[2], color_id = row[3], name = row[4], price = row[5], discount = row[6], stock = row[7], order_quantity = row[8])
 
 
-CSV_PATH_PRODUCTS = './image.csv'
+# CSV_PATH_PRODUCTS = './image.csv'
+
+# with open(CSV_PATH_PRODUCTS) as in_file:
+#     data_reader = csv.reader(in_file)
+#     next(data_reader, None)
+#     for row in data_reader:
+#         Image.objects.create(item_id = row[0], image_url=row[1], main = row[2])
+
+CSV_PATH_PRODUCTS = './member.csv'
 
 with open(CSV_PATH_PRODUCTS) as in_file:
     data_reader = csv.reader(in_file)
     next(data_reader, None)
     for row in data_reader:
-        Image.objects.create(item_id = row[0], image_url=row[1], main = row[2])
-
-
+        Member.objects.create(account = row[0], password = row[1], name = row[2], email=row[3], phone_number="0"+str(row[4]), address=row[5])
 
           
 
